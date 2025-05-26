@@ -70,6 +70,78 @@
         <p>Aqui apenas aceitamos os extraordinários e não os comuns, se você se acha competente o suficiente,entre em contato: 006molevocesentaficaduro@gmail.com</p>
     </section>
 
+    <div class="container">
+        <h2>Quiz de Matemática</h2>
+        <div id="quiz-container">
+            </div>
+        <button onclick="checkAnswers()">Verificar Respostas</button>
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Quanto é 7 + 8?",
+                answer: 15
+            },
+            {
+                question: "Quanto é 12 - 5?",
+                answer: 7
+            },
+            {
+                question: "Quanto é 6 * 4?",
+                answer: 24
+            },
+            {
+                question: "Quanto é 20 / 5?",
+                answer: 4
+            },
+            {
+                question: "Qual o resultado de 3 elevado a 2?",
+                answer: 9
+            }
+        ];
+
+        const quizContainer = document.getElementById('quiz-container');
+        const resultDiv = document.getElementById('result');
+
+        function loadQuestions() {
+            questions.forEach((q, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.classList.add('question');
+                questionDiv.innerHTML = `
+                    <p>${index + 1}. ${q.question}</p>
+                    <label for="q${index}">Sua resposta:</label>
+                    <input type="number" id="q${index}" name="q${index}" placeholder="Digite sua resposta">
+                `;
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        function checkAnswers() {
+            let correctAnswers = 0;
+            questions.forEach((q, index) => {
+                const userAnswer = parseInt(document.getElementById(`q${index}`).value);
+                if (userAnswer === q.answer) {
+                    correctAnswers++;
+                }
+            });
+
+            resultDiv.classList.remove('error'); // Remove classe de erro anterior, se houver
+            if (correctAnswers === questions.length) {
+                resultDiv.textContent = `Parabéns! Você acertou todas as ${correctAnswers} perguntas!`;
+                resultDiv.style.color = '#28a745'; // Verde
+            } else {
+                resultDiv.textContent = `Você acertou ${correctAnswers} de ${questions.length} perguntas. Tente novamente!`;
+                resultDiv.style.color = '#dc3545'; // Vermelho
+                resultDiv.classList.add('error');
+            }
+        }
+
+        // Carrega as perguntas quando a página é carregada
+        document.addEventListener('DOMContentLoaded', loadQuestions);
+    </script>
+    
     <footer>
         <p>&copy; pra quem quiser, chama no zap bb</p>
     </footer>
